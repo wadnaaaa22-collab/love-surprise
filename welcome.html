@@ -10,39 +10,48 @@
 
 <style>
 
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100%;
+    height:100vh;
     overflow:hidden;
     background:#0f172a;
     font-family:'Kanit',sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
     color:white;
     position:relative;
 }
 
-/* พื้นหลัง glow */
+/* glow */
 
-body::before{
-    content:"";
+.bg{
     position:absolute;
     width:500px;
     height:500px;
     background:#ff4d8d;
+    border-radius:50%;
     filter:blur(180px);
     opacity:0.2;
-    border-radius:50%;
     z-index:0;
 }
 
+/* กล่อง */
+
 .container{
-    text-align:center;
     position:relative;
-    z-index:2;
+    z-index:999;
+    text-align:center;
     padding:40px;
 }
+
+/* title */
 
 h1{
     font-size:60px;
@@ -50,11 +59,27 @@ h1{
     animation:glow 2s infinite alternate;
 }
 
+@keyframes glow{
+
+    from{
+        text-shadow:0 0 10px #ff4d8d;
+    }
+
+    to{
+        text-shadow:0 0 35px #ff99cc;
+    }
+
+}
+
+/* text */
+
 #text{
-    font-size:32px;
+    font-size:30px;
     margin-top:10px;
     transition:0.3s;
 }
+
+/* button */
 
 button{
     margin-top:30px;
@@ -66,38 +91,27 @@ button{
     font-size:22px;
     cursor:pointer;
     transition:0.3s;
-    box-shadow:0 0 20px rgba(255,77,141,0.5);
+    position:relative;
+    z-index:1000;
 }
 
 button:hover{
     transform:scale(1.08);
-    box-shadow:0 0 40px rgba(255,77,141,0.8);
-}
-
-@keyframes glow{
-    from{
-        text-shadow:0 0 10px #ff4d8d;
-    }
-
-    to{
-        text-shadow:0 0 30px #ff99cc;
-    }
 }
 
 /* emoji */
 
 .emoji{
     position:absolute;
-    font-size:30px;
-    animation:floatUp 3s linear forwards;
     pointer-events:none;
+    animation:floatUp 3s linear forwards;
     z-index:1;
 }
 
 @keyframes floatUp{
 
     0%{
-        transform:translateY(0) scale(0.5) rotate(0deg);
+        transform:translateY(0) scale(0.5);
         opacity:1;
     }
 
@@ -110,7 +124,10 @@ button:hover{
 
 </style>
 </head>
+
 <body>
+
+<div class="bg"></div>
 
 <div class="container">
 
@@ -118,7 +135,9 @@ button:hover{
 
     <p id="text">เหนื่อยไหมคะเบ๊บ 🥺</p>
 
-    <button id="btn" onclick="nextStep()">กดตรงนี้สิ 💖</button>
+    <button onclick="nextStep()" id="btn">
+        กดตรงนี้สิ 💖
+    </button>
 
 </div>
 
@@ -132,19 +151,25 @@ function nextStep(){
     const btn = document.getElementById("btn");
 
     // หน้า 2
+
     if(step === 0){
 
-        text.innerHTML = "สู้ๆนะค้าบ เค้าอยู่ข้างๆเสมอ ✨";
-        btn.innerHTML = "อีกอันนึงง 💕";
+        text.innerHTML =
+        "สู้ๆนะค้าบ เค้าอยู่ข้างๆเสมอ ✨";
 
-        step = 1;
+        btn.innerHTML =
+        "กดอีกทีสิ 💕";
+
+        step++;
 
     }
 
     // หน้า 3
-    else if(step === 1){
 
-        text.innerHTML = "เก่งที่สุดเลยยย 💖";
+    else{
+
+        text.innerHTML =
+        "เก่งที่สุดเลยยย 💖";
 
         btn.style.display = "none";
 
@@ -166,22 +191,26 @@ function startEmojiSpam(){
 
         const emoji = document.createElement("div");
 
-        emoji.classList.add("emoji");
+        emoji.className = "emoji";
 
         emoji.innerHTML =
-            emojis[Math.floor(Math.random() * emojis.length)];
+        emojis[Math.floor(Math.random()*emojis.length)];
 
-        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.left =
+        Math.random()*100 + "vw";
 
-        emoji.style.top = "100vh";
+        emoji.style.top =
+        "100vh";
 
         emoji.style.fontSize =
-            (Math.random() * 35 + 20) + "px";
+        (Math.random()*40 + 20) + "px";
 
         document.body.appendChild(emoji);
 
         setTimeout(() => {
+
             emoji.remove();
+
         },3000);
 
     },120);
