@@ -2,7 +2,7 @@ function checkPassword(){
 
     const password = document.getElementById("password").value;
 
-    if(password === "2501"){
+    if(password === "2000"){
 
         window.location.href = "welcome.html";
 
