@@ -20,65 +20,92 @@ body{
     align-items:center;
     height:100vh;
     color:white;
+    position:relative;
+}
+
+/* พื้นหลัง glow */
+
+body::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#ff4d8d;
+    filter:blur(180px);
+    opacity:0.2;
+    border-radius:50%;
+    z-index:0;
 }
 
 .container{
     text-align:center;
+    position:relative;
     z-index:2;
+    padding:40px;
 }
 
 h1{
-    font-size:55px;
-    margin-bottom:10px;
+    font-size:60px;
+    margin-bottom:20px;
     animation:glow 2s infinite alternate;
 }
 
-p{
-    font-size:28px;
+#text{
+    font-size:32px;
+    margin-top:10px;
+    transition:0.3s;
 }
 
 button{
-    margin-top:25px;
+    margin-top:30px;
     padding:15px 35px;
     border:none;
-    border-radius:15px;
+    border-radius:18px;
     background:#ff4d8d;
     color:white;
     font-size:22px;
     cursor:pointer;
     transition:0.3s;
+    box-shadow:0 0 20px rgba(255,77,141,0.5);
 }
 
 button:hover{
     transform:scale(1.08);
+    box-shadow:0 0 40px rgba(255,77,141,0.8);
 }
 
 @keyframes glow{
     from{
         text-shadow:0 0 10px #ff4d8d;
     }
+
     to{
         text-shadow:0 0 30px #ff99cc;
     }
 }
+
+/* emoji */
 
 .emoji{
     position:absolute;
     font-size:30px;
     animation:floatUp 3s linear forwards;
     pointer-events:none;
+    z-index:1;
 }
 
 @keyframes floatUp{
+
     0%{
-        transform:translateY(0) scale(0.5);
+        transform:translateY(0) scale(0.5) rotate(0deg);
         opacity:1;
     }
 
     100%{
-        transform:translateY(-800px) scale(1.5) rotate(360deg);
+        transform:translateY(-900px) scale(1.5) rotate(360deg);
         opacity:0;
     }
+
 }
 
 </style>
@@ -91,22 +118,35 @@ button:hover{
 
     <p id="text">เหนื่อยไหมคะเบ๊บ 🥺</p>
 
-    <button onclick="nextMessage()">กดตรงนี้สิ 💖</button>
+    <button id="btn" onclick="nextStep()">กดตรงนี้สิ 💖</button>
 
 </div>
 
 <script>
 
-let stage = 0;
+let step = 0;
 
-function nextMessage(){
+function nextStep(){
 
     const text = document.getElementById("text");
+    const btn = document.getElementById("btn");
 
-    if(stage === 0){
+    // หน้า 2
+    if(step === 0){
 
         text.innerHTML = "สู้ๆนะค้าบ เค้าอยู่ข้างๆเสมอ ✨";
-        stage = 1;
+        btn.innerHTML = "อีกอันนึงง 💕";
+
+        step = 1;
+
+    }
+
+    // หน้า 3
+    else if(step === 1){
+
+        text.innerHTML = "เก่งที่สุดเลยยย 💖";
+
+        btn.style.display = "none";
 
         startEmojiSpam();
 
@@ -116,7 +156,11 @@ function nextMessage(){
 
 function startEmojiSpam(){
 
-    const emojis = ["💖","✨","🥺","❤️","🌸","💗","🫶"];
+    const emojis = [
+        "💖","✨","🥺","❤️",
+        "🌸","💗","🫶","💕",
+        "💞","⭐"
+    ];
 
     setInterval(() => {
 
@@ -124,13 +168,15 @@ function startEmojiSpam(){
 
         emoji.classList.add("emoji");
 
-        emoji.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+        emoji.innerHTML =
+            emojis[Math.floor(Math.random() * emojis.length)];
 
-        emoji.style.left = Math.random()*100 + "vw";
+        emoji.style.left = Math.random() * 100 + "vw";
 
         emoji.style.top = "100vh";
 
-        emoji.style.fontSize = (Math.random()*30 + 20) + "px";
+        emoji.style.fontSize =
+            (Math.random() * 35 + 20) + "px";
 
         document.body.appendChild(emoji);
 
@@ -138,7 +184,7 @@ function startEmojiSpam(){
             emoji.remove();
         },3000);
 
-    },150);
+    },120);
 
 }
 
