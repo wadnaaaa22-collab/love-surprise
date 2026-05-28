@@ -3,24 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome ❤️</title>
+
+<title>For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-    background:black;
-    color:white;
+    margin:0;
+    overflow:hidden;
+    background:#0f172a;
+    font-family:'Kanit',sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
     height:100vh;
-    overflow:hidden;
-    font-family:sans-serif;
+    color:white;
+}
+
+.container{
+    text-align:center;
+    z-index:2;
 }
 
 h1{
-    font-size:50px;
-    animation: glow 2s infinite alternate;
+    font-size:55px;
+    margin-bottom:10px;
+    animation:glow 2s infinite alternate;
+}
+
+p{
+    font-size:28px;
+}
+
+button{
+    margin-top:25px;
+    padding:15px 35px;
+    border:none;
+    border-radius:15px;
+    background:#ff4d8d;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
 }
 
 @keyframes glow{
@@ -28,7 +58,26 @@ h1{
         text-shadow:0 0 10px #ff4d8d;
     }
     to{
-        text-shadow:0 0 30px #ff99bb;
+        text-shadow:0 0 30px #ff99cc;
+    }
+}
+
+.emoji{
+    position:absolute;
+    font-size:30px;
+    animation:floatUp 3s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    0%{
+        transform:translateY(0) scale(0.5);
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-800px) scale(1.5) rotate(360deg);
+        opacity:0;
     }
 }
 
@@ -36,7 +85,64 @@ h1{
 </head>
 <body>
 
-<h1>ตั้งใจทำงานคั๊บเบ๊บ ❤️</h1>
+<div class="container">
+
+    <h1>Welcome My Love ❤️</h1>
+
+    <p id="text">เหนื่อยไหมคะเบ๊บ 🥺</p>
+
+    <button onclick="nextMessage()">กดตรงนี้สิ 💖</button>
+
+</div>
+
+<script>
+
+let stage = 0;
+
+function nextMessage(){
+
+    const text = document.getElementById("text");
+
+    if(stage === 0){
+
+        text.innerHTML = "สู้ๆนะค้าบ เค้าอยู่ข้างๆเสมอ ✨";
+        stage = 1;
+
+        startEmojiSpam();
+
+    }
+
+}
+
+function startEmojiSpam(){
+
+    const emojis = ["💖","✨","🥺","❤️","🌸","💗","🫶"];
+
+    setInterval(() => {
+
+        const emoji = document.createElement("div");
+
+        emoji.classList.add("emoji");
+
+        emoji.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+        emoji.style.left = Math.random()*100 + "vw";
+
+        emoji.style.top = "100vh";
+
+        emoji.style.fontSize = (Math.random()*30 + 20) + "px";
+
+        document.body.appendChild(emoji);
+
+        setTimeout(() => {
+            emoji.remove();
+        },3000);
+
+    },150);
+
+}
+
+</script>
 
 </body>
 </html>
