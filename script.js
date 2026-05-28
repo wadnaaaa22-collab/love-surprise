@@ -8,7 +8,7 @@ function checkPassword(){
 
     }else{
 
-        document.getElementById("error").innerText = "รหัสไม่ถูกนะ 😢";
+        document.getElementById("error").innerText = "รหัสไม่ถูกนะค้าบคนดี 😢";
 
     }
 
